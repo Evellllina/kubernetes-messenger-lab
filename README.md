@@ -56,4 +56,4 @@ k8s/
 kubectl apply -f argocd/messager-prod-application.yaml
 ```
 ## Автор
-Петрова Эвелина Владимировна М8О-103БВ-25
+Петрова Эвелина Владимировна 
