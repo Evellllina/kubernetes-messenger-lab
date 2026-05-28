@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: messager
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - postgres-pvc.yaml
+  - postgres.yaml
+  - minio.yaml
+  - s3-csi.yaml
+  - migrate-users-job.yaml
+  - migrate-messages-job.yaml
+  - user-service.yaml
+  - message-service.yaml
+  - bff.yaml
+  - frontend.yaml
+  - ingress.yaml
+
+configMapGenerator:
+  - name: postgres-init-sql
+    files:
+      - init-db.sh=init/init-db.sh
+  - name: users-migrations-cm
+    files:
+      - 001_init.sql=migrations/users/001_init.sql
+  - name: messages-migrations-cm
+    files:
+      - 001_init.sql=migrations/messages/001_init.sql
+      - 002_add_file_name.sql=migrations/messages/002_add_file_name.sql
