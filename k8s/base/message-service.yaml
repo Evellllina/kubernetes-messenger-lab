@@ -14,12 +14,21 @@ spec:
     spec:
       affinity:
         nodeAffinity:
+          # 1. Жесткое условие (Обязательно workload=app)
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: workload
                     operator: In
                     values: ["app"]
+          # 2. Мягкое условие (Желательно disk=fast) — теперь оно на месте
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: disk
+                    operator: In
+                    values: ["fast"]
       containers:
         - name: message-service
           image: mablinov2704/message-service:latest
